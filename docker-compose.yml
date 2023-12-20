@@ -1,0 +1,57 @@
+version: '3'
+services:
+  auth:
+    build:
+      context: ./neenopal-project
+    image: auth
+    restart: always
+    volumes:
+      - ./neenopal-project:/app
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"  # Expose Auth service on port 8000
+
+  blog:
+    build:
+      context: ./neenopal-project-blog
+    image: blog
+    restart: always
+    volumes:
+      - ./neenopal-project-blog:/app
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8002:8002"  # Expose Blog service on port 8002
+      
+  dashboard:
+    build:
+      context: ./dashboard
+    image: dashboard
+    restart: always
+    volumes:
+      - ./dashboard:/app
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8001:8001"  # Expose Dashboard service on port 8001
+
+  redis:
+    restart: always
+    image: redis
+
+  celery:
+    build: ./dashboard
+    command: celery --app=core worker -l INFO
+    volumes:
+      - ./dashboard:/app
+    restart: always
+    depends_on:
+      - redis
+
