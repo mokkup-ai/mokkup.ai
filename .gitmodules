@@ -1,9 +1,9 @@
+[submodule "auth"]
+	path = auth
+	url = git@github.com:mokkup-ai/auth.git
+[submodule "blog"]
+	path = blog
+	url = git@github.com:mokkup-ai/blog.git
 [submodule "dashboard"]
 	path = dashboard
 	url = git@github.com:mokkup-ai/dashboard.git
-[submodule "neenopal-project"]
-	path = neenopal-project
-	url = git@github.com:mokkup-ai/neenopal-project.git
-[submodule "neenopal-project-blog"]
-	path = neenopal-project-blog
-	url = git@github.com:mokkup-ai/neenopal-project-blog.git
