@@ -7,9 +7,12 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: instance
     alb.ingress.kubernetes.io/tags: Name=alb
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}, {"HTTP": 80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:731576721364:certificate/8e69b863-a166-4007-a20e-bdda2cff9211
 spec:
   rules:
-    - http:
+    - host: test-api.mokkup.ai  # Replace with your actual domain
+      http:
         paths:
           - path: /v1/authservices
             pathType: Prefix
