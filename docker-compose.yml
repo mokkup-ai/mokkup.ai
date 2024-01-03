@@ -2,11 +2,11 @@ version: '3'
 services:
   auth:
     build:
-      context: ./neenopal-project
+      context: ./auth
     image: auth
     restart: always
     volumes:
-      - ./neenopal-project:/app
+      - ./auth:/app
     stdin_open: true
     tty: true
     extra_hosts:
@@ -16,11 +16,11 @@ services:
 
   blog:
     build:
-      context: ./neenopal-project-blog
+      context: ./blog
     image: blog
     restart: always
     volumes:
-      - ./neenopal-project-blog:/app
+      - ./blog:/app
     stdin_open: true
     tty: true
     extra_hosts:
@@ -52,6 +52,15 @@ services:
     volumes:
       - ./dashboard:/app
     restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - redis
 
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./nginx/conf.d/backend.conf:/etc/nginx/conf.d/backend.conf
+    ports:
+      - 80:80
